@@ -6,6 +6,37 @@
   <title>Pruebas Jira</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
+<style>
+  .incident-row {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: .6rem;
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+  .incident-date {
+    font-family: var(--font-mono); font-size: .75rem;
+    color: var(--color-muted); padding-top: 2px;
+  }
+  .incident-title { font-weight: 500; font-size: .88rem; }
+  .incident-desc  { font-size: .8rem; color: var(--color-muted); margin-top: 3px; }
+  .badge-condition {
+    font-family: var(--font-mono); font-size: .7rem;
+    padding: .2rem .6rem; border-radius: 4px; white-space: nowrap;
+  }
+  .badge-active  { background: rgba(34,197,94,.15); color: var(--color-active); }
+  .badge-warning { background: rgba(245,158,11,.15); color: var(--color-warning); }
+  .badge-error   { background: rgba(239,68,68,.15);  color: var(--color-error); }
+
+  @media (max-width: 576px) {
+    .incident-row { grid-template-columns: 1fr; gap: .4rem; }
+  }
+</style>
 <body class="bg-light">
   <nav class="navbar navbar-dark bg-dark">
   <div class="container d-flex justify-content-between">
@@ -25,6 +56,47 @@
     
     <p class="lead">
     </p>
+    <div class="section-title">— Historial de incidentes recientes</div>
+    
+    <div class="incident-row">
+      <div class="incident-date">15 may 2026<br>06:12</div>
+      <div>
+        <div class="incident-title">Sistema de Urgencias — Caída parcial del módulo de triaje</div>
+        <div class="incident-desc">El módulo de registro de triaje presentó timeout en consultas
+          a la base de datos. Equipo de soporte notificado.</div>
+      </div>
+      <span class="badge-condition badge-error">CONDITION_ERROR</span>
+    </div>
+    
+    <div class="incident-row">
+      <div class="incident-date">14 may 2026<br>22:40</div>
+      <div>
+        <div class="incident-title">API de Laboratorio — Latencia elevada en respuestas</div>
+        <div class="incident-desc">Incremento en el tiempo de respuesta superior a 3 s en
+          endpoints de resultados. Se investiga el origen.</div>
+      </div>
+      <span class="badge-condition badge-warning">CONDITION_WARNING</span>
+    </div>
+    
+    <div class="incident-row">
+      <div class="incident-date">13 may 2026<br>10:05</div>
+      <div>
+        <div class="incident-title">Servidor de Base de Datos — Mantenimiento programado</div>
+        <div class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito.
+          Servicios restaurados sin pérdida de datos.</div>
+      </div>
+      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+    </div>
+    
+    <div class="incident-row">
+      <div class="incident-date">10 may 2026<br>14:30</div>
+      <div>
+        <div class="incident-title">Historia Clínica — Interrupción en módulo de consultas externas</div>
+        <div class="incident-desc">Falla en la integración con el sistema de autenticación SSO.
+          Resuelto mediante rollback del último despliegue.</div>
+      </div>
+      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+    </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
