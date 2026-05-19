@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Estado del Sistema - Hospital San Rafael</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -30,12 +31,12 @@
       gap: 1.5rem;
       align-items: center;
       transition: transform 0.2s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .incident-row:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .incident-date {
@@ -66,9 +67,20 @@
       text-transform: uppercase;
     }
 
-    .badge-active { background: rgba(25, 135, 84, 0.1); color: var(--color-active); }
-    .badge-warning { background: rgba(255, 193, 7, 0.15); color: var(--color-warning); }
-    .badge-error { background: rgba(220, 53, 69, 0.1); color: var(--color-error); }
+    .badge-active {
+      background: rgba(25, 135, 84, 0.1);
+      color: var(--color-active);
+    }
+
+    .badge-warning {
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--color-warning);
+    }
+
+    .badge-error {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--color-error);
+    }
 
     .section-title {
       font-weight: 800;
@@ -84,8 +96,69 @@
         gap: 0.75rem;
       }
     }
+
+          .uptime-row {
+        margin-bottom: 1rem;
+      }
+
+      .uptime-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: .8rem;
+        margin-bottom: 4px;
+      }
+
+      .uptime-pct {
+        font-family: var(--font-mono);
+        color: var(--color-active);
+      }
+
+      .uptime-bar-bg {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--color-border);
+        overflow: hidden;
+      }
+
+      .uptime-bar-fill {
+        height: 100%;
+        border-radius: 3px;
+        background: var(--color-active);
+        transition: width 1s ease;
+      }
+
+      .uptime-bar-fill.warn {
+        background: var(--color-warning);
+      }
+
+      .uptime-bar-fill.err {
+        background: var(--color-error);
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--color-border);
+        margin-top: 4rem;
+        padding: 2rem 0;
+        color: var(--color-muted);
+        font-size: .8rem;
+      }
+
+      .site-footer a {
+        color: var(--color-muted);
+        text-decoration: none;
+      }
+
+      .site-footer a:hover {
+        color: var(--color-text);
+      }
+
+      .footer-mono {
+        font-family: var(--font-mono);
+        font-size: .72rem;
+      }
   </style>
 </head>
+
 <body>
 
   <!-- NAVBAR - INTEGRANTE 1 -->
@@ -128,52 +201,143 @@
   <!-- MAIN CONTENT - INTEGRANTE 3 -->
   <main class="container py-4">
     <h2 class="section-title">Historial de Incidentes Recientes</h2>
-    
+
     <div class="incident-row">
       <div class="incident-date">15 may 2026<br>06:12</div>
       <div>
         <div class="incident-title">Sistema de Urgencias — Caída parcial del módulo de triaje</div>
-        <p class="incident-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos. Equipo de soporte notificado.</p>
+        <p class="incident-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos.
+          Equipo de soporte notificado.</p>
       </div>
       <div class="text-end">
         <span class="badge-condition badge-error">CONDITION_ERROR</span>
       </div>
     </div>
-    
+
     <div class="incident-row">
       <div class="incident-date">14 may 2026<br>22:40</div>
       <div>
         <div class="incident-title">API de Laboratorio — Latencia elevada en respuestas</div>
-        <p class="incident-desc">Incremento en el tiempo de respuesta superior a 3s en endpoints de resultados. Se investiga el origen.</p>
+        <p class="incident-desc">Incremento en el tiempo de respuesta superior a 3s en endpoints de resultados. Se
+          investiga el origen.</p>
       </div>
       <div class="text-end">
         <span class="badge-condition badge-warning">CONDITION_WARNING</span>
       </div>
     </div>
-    
+
     <div class="incident-row">
       <div class="incident-date">13 may 2026<br>10:05</div>
       <div>
         <div class="incident-title">Servidor de Base de Datos — Mantenimiento programado</div>
-        <p class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin pérdida de datos.</p>
+        <p class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin
+          pérdida de datos.</p>
       </div>
       <div class="text-end">
         <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
       </div>
     </div>
-    
+
     <div class="incident-row">
       <div class="incident-date">10 may 2026<br>14:30</div>
       <div>
         <div class="incident-title">Historia Clínica — Interrupción en módulo de consultas externas</div>
-        <p class="incident-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante rollback.</p>
+        <p class="incident-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante
+          rollback.</p>
       </div>
       <div class="text-end">
         <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
       </div>
     </div>
+
+    <!-- ABCD26-6: Barras de disponibilidad (uptime) Integrante 5-->
+    <div class="section-title">Disponibilidad últimos 30 días</div>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>Historia Clínica</span>
+            <span class="uptime-pct">99.8%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill" style="width:99.8%"></div>
+          </div>
+        </div>
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>Citas Médicas</span>
+            <span class="uptime-pct">99.5%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill" style="width:99.5%"></div>
+          </div>
+        </div>
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>API Laboratorio</span>
+            <span class="uptime-pct" style="color:var(--color-warning)">94.2%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill warn" style="width:94.2%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>Base de Datos</span>
+            <span class="uptime-pct">99.9%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill" style="width:99.9%"></div>
+          </div>
+        </div>
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>Sistema de Urgencias</span>
+            <span class="uptime-pct" style="color:var(--color-error)">87.3%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill err" style="width:87.3%"></div>
+          </div>
+        </div>
+        <div class="uptime-row">
+          <div class="uptime-label">
+            <span>Facturación</span>
+            <span class="uptime-pct">98.7%</span>
+          </div>
+          <div class="uptime-bar-bg">
+            <div class="uptime-bar-fill" style="width:98.7%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABCD26-6: Footer institucional Integrante 5-->
+    <footer class="site-footer">
+      <div class="container d-flex flex-column flex-md-row
+               justify-content-between align-items-start
+               align-items-md-center gap-3">
+        <div>
+          <div class="fw-semibold mb-1" style="color:var(--color-text)">
+            HSR Status · Hospital San Rafael
+          </div>
+          <div class="footer-mono">
+            Tunja, Boyacá · © 2026 · Sistema de Monitoreo v1.0
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <a href="index.html">Inicio</a>
+          <a href="segunda_vista.html">Detalle</a>
+          <a href="#">Historial</a>
+          <a href="#">Admin</a>
+        </div>
+      </div>
+    </footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
