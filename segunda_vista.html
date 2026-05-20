@@ -1,49 +1,214 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Segunda Vista</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<!-- ABCD26-5: Vista detalle de producto con línea de tiempo -->
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-between">
-      <span class="navbar-brand">Segunda Vista</span>
+<!-- NAVBAR -->
+<nav class="main-nav">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">🏥</div>
+      <div class="nav-logo-text">
+        HSR Status
+        <span>Hospital San Rafael · Tunja</span>
+      </div>
+    </a>
+    <div class="nav-links d-flex gap-1">
+      <a href="index.html">Inicio</a>
+      <a href="segunda_vista.html" class="active">Detalle Producto</a>
+    </div>
+  </div>
+</nav>
 
-      <!-- Enlaces a otras páginas -->
-      <div>
-        <a href="index.html" class="btn btn-outline-light btn-sm me-2">Inicio</a>
-        <a href="segunda.html" class="btn btn-light btn-sm text-dark fw-bold">Segunda Vista</a>
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <a href="index.html">Portal</a>
+    <span class="mx-2">/</span>
+    <a href="index.html">Productos</a>
+    <span class="mx-2">/</span>
+    <span style="color:var(--color-text)">Historia Clínica Electrónica</span>
+  </div>
+</div>
+
+<main class="container pb-5">
+
+  <!-- PRODUCT HEADER -->
+  <div class="product-header">
+    <div class="product-tag">SHC · Aplicación · Core</div>
+    <h1 class="product-title">Sistema de Historia Clínica</h1>
+    <div class="product-meta">
+      ID: SHC-001 · Responsable: Área de TI · Criticidad: Alta
+    </div>
+    <div>
+      <span class="status-chip chip-active">
+        <span style="width:8px;height:8px;border-radius:50%;
+                     background:currentColor;display:inline-block"></span>
+        CONDITION_ACTIVE — Operativo
+      </span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label">Uptime 30 días</div>
+      <div class="stat-value" style="color:var(--color-active)">99.8%</div>
+      <div class="stat-sub">↑ 0.2% vs mes anterior</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Incidentes</div>
+      <div class="stat-value">1</div>
+      <div class="stat-sub">En los últimos 30 días</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Última caída</div>
+      <div class="stat-value" style="font-size:1rem;padding-top:.25rem">10 may 2026</div>
+      <div class="stat-sub">Duración: 48 min</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section-title">— Línea de tiempo de eventos</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot tl-dot-active"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-date">15 may 2026 · 08:00</div>
+          <div class="tl-event-title">Sistema operativo con normalidad</div>
+          <div class="tl-desc">Todos los módulos responden correctamente.
+            Tiempo de respuesta promedio: 320 ms. Sin alertas activas.</div>
+        </div>
+        <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
       </div>
     </div>
-  </nav>
 
-  <main class="container py-5">
-    <h1 class="display-6 mb-4">Esta es la Segunda Vista</h1>
-
-    <p class="lead">Aquí puedes agregar contenido adicional vinculado a Jira, GitHub o Netlify.</p>
-
-    <hr>
-
-    <!-- Bloque 1 -->
-    <div class="mb-4">
-      <h5>Acción adicional 1</h5>
-      <p>Descripción de la acción o prueba vinculada a Jira.</p>
-      <a href="index.html" class="btn btn-primary">Volver a Página Principal</a>
+    <div class="tl-item">
+      <div class="tl-dot tl-dot-active"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-date">11 may 2026 · 09:15</div>
+          <div class="tl-event-title">Restauración completa tras incidente</div>
+          <div class="tl-desc">El rollback resolvió la incompatibilidad en el módulo SSO.
+            Monitoreo activo por 24 h adicionales.</div>
+        </div>
+        <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+      </div>
     </div>
 
-    <!-- Bloque 2 -->
-    <div class="mb-4">
-      <h5>Acción adicional 2</h5>
-      <p>Otro contenido o actividad que desees mostrar aquí.</p>
-      <button class="btn btn-success">Acción secundaria</button>
+    <div class="tl-item">
+      <div class="tl-dot tl-dot-warning"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-date">10 may 2026 · 15:30</div>
+          <div class="tl-event-title">Degradación parcial — módulo autenticación</div>
+          <div class="tl-desc">Se detecta fallo en integración SSO. Usuarios con sesiones
+            activas continúan. Nuevos inicios de sesión fallando.</div>
+        </div>
+        <span class="badge-condition badge-warning">CONDITION_WARNING</span>
+      </div>
     </div>
 
-  </main>
+    <div class="tl-item">
+      <div class="tl-dot tl-dot-error"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-date">10 may 2026 · 14:30</div>
+          <div class="tl-event-title">Interrupción en módulo de consultas externas</div>
+          <div class="tl-desc">El despliegue v2.4.1 introdujo bug en capa de autenticación.
+            Sistema parcialmente inaccesible 48 min. Protocolo de contingencia activado.</div>
+        </div>
+        <span class="badge-condition badge-error">CONDITION_ERROR</span>
+      </div>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="tl-item">
+      <div class="tl-dot tl-dot-active"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-date">01 may 2026 · 02:00</div>
+          <div class="tl-event-title">Mantenimiento preventivo programado</div>
+          <div class="tl-desc">Actualización de dependencias y optimización de índices.
+            Sin impacto en usuarios. Ventana completada en 35 min.</div>
+        </div>
+        <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK BUTTON -->
+  <div class="mt-4">
+    <a href="index.html" class="btn-back">← Volver al Portal de Estado</a>
+  </div>
+
+</main>
+
+<!-- CSS necesario para ABCD26-5 (agregar dentro de <style>) -->
+<style>
+  .breadcrumb-bar {
+    padding: 1rem 0; border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono); font-size: .75rem; color: var(--color-muted);
+  }
+  .breadcrumb-bar a { color: var(--color-muted); text-decoration: none; }
+  .breadcrumb-bar a:hover { color: var(--color-text); }
+  .product-header { padding: 2.5rem 0 2rem; }
+  .product-tag {
+    font-family: var(--font-mono); font-size: .7rem;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--color-muted); margin-bottom: .5rem;
+  }
+  .product-title {
+    font-size: 1.75rem; font-weight: 600;
+    color: #fff; letter-spacing: -.02em; margin-bottom: .4rem;
+  }
+  .product-meta { font-size: .8rem; color: var(--color-muted); font-family: var(--font-mono); }
+  .status-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: .3rem .85rem; border-radius: 999px;
+    font-family: var(--font-mono); font-size: .78rem; margin-top: .75rem;
+  }
+  .chip-active { background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3); color: var(--color-active); }
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: .75rem; margin-bottom: 2rem;
+  }
+  .stat-box {
+    background: var(--color-surface); border: 1px solid var(--color-border);
+    border-radius: 8px; padding: 1rem 1.25rem;
+  }
+  .stat-label {
+    font-family: var(--font-mono); font-size: .7rem;
+    text-transform: uppercase; letter-spacing: .07em;
+    color: var(--color-muted); margin-bottom: .3rem;
+  }
+  .stat-value { font-size: 1.5rem; font-weight: 600; color: #fff; line-height: 1; }
+  .stat-sub { font-size: .72rem; color: var(--color-muted); margin-top: .25rem; }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px;
+    width: 1px; background: var(--color-border);
+  }
+  .tl-item { position: relative; margin-bottom: 1.5rem; }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--color-bg); z-index: 1;
+  }
+  .tl-dot-active  { background: var(--color-active);  box-shadow: 0 0 0 3px rgba(34,197,94,.2); }
+  .tl-dot-warning { background: var(--color-warning); box-shadow: 0 0 0 3px rgba(245,158,11,.2); }
+  .tl-dot-error   { background: var(--color-error);   box-shadow: 0 0 0 3px rgba(239,68,68,.2); }
+  .tl-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .tl-date  { font-family: var(--font-mono); font-size: .72rem; color: var(--color-muted); white-space: nowrap; }
+  .tl-event-title { font-weight: 500; font-size: .9rem; }
+  .tl-desc { font-size: .82rem; color: var(--color-muted); margin-top: .3rem; line-height: 1.5; }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--color-surface); border: 1px solid var(--color-border);
+    color: var(--color-text); text-decoration: none;
+    padding: .5rem 1.1rem; border-radius: 6px; font-size: .83rem; transition: all .2s;
+  }
+  .btn-back:hover { border-color: #374151; color: #fff; background: #1a2332; }
+  @media (max-width: 576px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+</style>
