@@ -3,470 +3,547 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Portal de Estado — Hospital San Rafael Tunja</title>
+  <title>Hospital San Rafael | Portal de Estado</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-active:  #22c55e;
-      --color-warning: #f59e0b;
-      --color-error:   #ef4444;
-      --color-bg:      #0b0f1a;
-      --color-surface: #111827;
-      --color-border:  #1f2937;
-      --color-text:    #e5e7eb;
-      --color-muted:   #6b7280;
-      --color-accent:  #3b82f6;
-      --font-mono: 'IBM Plex Mono', monospace;
-      --font-sans: 'IBM Plex Sans', sans-serif;
+      --active:  #16a34a;
+      --active-bg: #dcfce7;
+      --active-border: #86efac;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --warning-border: #fcd34d;
+      --error:   #dc2626;
+      --error-bg: #fee2e2;
+      --error-border: #fca5a5;
+      --navy:    #1e293b;
+      --navy2:   #334155;
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --border:  #e2e8f0;
+      --surface: #f8fafc;
+      --white:   #ffffff;
+      --font: 'Inter', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--text);
+      font-family: var(--font);
       font-size: 0.95rem;
       min-height: 100vh;
     }
 
-    /* ── NAVBAR ───────────────────────────────── */
+    /* ── NAVBAR ── */
     .main-nav {
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
-      padding: 0.85rem 0;
+      background: var(--navy);
+      padding: 0.9rem 0;
       position: sticky; top: 0; z-index: 100;
     }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo-icon {
-      width: 32px; height: 32px;
-      background: var(--color-accent);
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: #fff;
+      font-weight: 700; font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+    .nav-brand-icon {
+      width: 30px; height: 30px;
+      background: #fff;
       border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1rem;
     }
-    .nav-logo-text {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--color-text);
-      line-height: 1.2;
-    }
-    .nav-logo-text span {
-      display: block;
-      color: var(--color-muted);
-      font-size: 0.7rem;
-    }
+    .nav-links { display: flex; gap: 0.25rem; }
     .nav-links a {
-      color: var(--color-muted);
+      color: #94a3b8;
       text-decoration: none;
       font-size: 0.85rem;
-      padding: 0.3rem 0.75rem;
-      border-radius: 4px;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 5px;
       transition: all .2s;
     }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--color-text);
-      background: var(--color-border);
-    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-links a.active { color: #fff; background: rgba(255,255,255,.12); }
 
-    /* ── HERO ─────────────────────────────────── */
+    /* ── HERO ── */
     .hero {
-      padding: 3.5rem 0 2.5rem;
-      border-bottom: 1px solid var(--color-border);
-    }
-    .global-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(34,197,94,.1);
-      border: 1px solid rgba(34,197,94,.3);
-      border-radius: 999px;
-      padding: 0.35rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--color-active);
-      margin-bottom: 1.25rem;
-    }
-    .global-badge.warning {
-      background: rgba(245,158,11,.1);
-      border-color: rgba(245,158,11,.3);
-      color: var(--color-warning);
-    }
-    .global-badge.error {
-      background: rgba(239,68,68,.1);
-      border-color: rgba(239,68,68,.3);
-      color: var(--color-error);
-    }
-    .pulse {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: currentColor;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50% { opacity: .5; transform: scale(1.3); }
+      text-align: center;
+      padding: 3.5rem 1rem 3rem;
+      border-bottom: 1px solid var(--border);
     }
     .hero h1 {
-      font-size: 2rem; font-weight: 600;
-      letter-spacing: -.02em;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .global-chip {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--active);
       color: #fff;
-      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      padding: 0.55rem 1.75rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
     }
-    .hero p {
-      color: var(--color-muted);
-      font-size: 0.9rem;
-      font-family: var(--font-mono);
+    .global-chip.warning { background: var(--warning); }
+    .global-chip.error   { background: var(--error); }
+    .pulse-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,.7);
+      animation: blink 1.8s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: .3; }
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: var(--mono);
     }
 
-    /* ── SECTION TITLE ────────────────────────── */
-    .section-title {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--color-muted);
-      padding: 2rem 0 1rem;
-      border-top: 1px solid var(--color-border);
-      margin-top: 2rem;
-    }
-
-    /* ── SERVICE CARDS ────────────────────────── */
-    .service-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 1.1rem 1.25rem;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: border-color .2s, transform .2s;
-      text-decoration: none;
-      color: inherit;
-      margin-bottom: 0.6rem;
-    }
-    .service-card:hover {
-      border-color: #374151;
-      transform: translateY(-1px);
-      color: inherit;
-    }
-    .service-name {
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: var(--color-text);
-    }
-    .service-sub {
-      font-size: 0.75rem;
-      color: var(--color-muted);
-      font-family: var(--font-mono);
-      margin-top: 2px;
-    }
-    .status-dot {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.78rem;
-      font-family: var(--font-mono);
-      white-space: nowrap;
-    }
-    .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .dot-active  { background: var(--color-active); }
-    .dot-warning { background: var(--color-warning); }
-    .dot-error   { background: var(--color-error); }
-    .text-active  { color: var(--color-active); }
-    .text-warning { color: var(--color-warning); }
-    .text-error   { color: var(--color-error); }
-
-    /* ── INCIDENTS ────────────────────────────── */
-    .incident-row {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 0.6rem;
-      display: grid;
-      grid-template-columns: 110px 1fr auto;
-      gap: 1rem;
-      align-items: start;
-    }
-    .incident-date {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--color-muted);
-      padding-top: 2px;
-    }
-    .incident-title { font-weight: 500; font-size: 0.88rem; }
-    .incident-desc  { font-size: 0.8rem; color: var(--color-muted); margin-top: 3px; }
-    .badge-condition {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-    .badge-active  { background: rgba(34,197,94,.15); color: var(--color-active); }
-    .badge-warning { background: rgba(245,158,11,.15); color: var(--color-warning); }
-    .badge-error   { background: rgba(239,68,68,.15);  color: var(--color-error); }
-
-    /* ── UPTIME BARS ──────────────────────────── */
-    .uptime-row {
+    /* ── SECTION HEADER ── */
+    .section-header {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
       margin-bottom: 1rem;
     }
-    .uptime-label {
+    .section-wrap {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .service-card:hover {
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      border-color: #cbd5e1;
+      color: inherit;
+    }
+    .svc-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    .svc-sub  {
+      font-size: 0.73rem; color: var(--muted);
+      font-family: var(--mono); margin-top: 2px;
+    }
+
+    /* ── STATUS BADGES ── */
+    .badge-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 700;
+      font-family: var(--mono);
+      padding: 0.25rem 0.7rem;
+      border-radius: 5px;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .bs-active  { background: var(--active-bg);  color: var(--active);  border: 1px solid var(--active-border); }
+    .bs-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+    .bs-error   { background: var(--error-bg);   color: var(--error);   border: 1px solid var(--error-border); }
+    .bs-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: currentColor; flex-shrink: 0;
+    }
+
+    /* ── INCIDENTS ── */
+    .incident-card {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .inc-date {
+      font-family: var(--mono); font-size: 0.72rem;
+      color: var(--muted); line-height: 1.6;
+    }
+    .inc-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 3px; }
+    .inc-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* CONDITION badges (text-only style) */
+    .cond-badge {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 700;
+      padding: 0.22rem 0.65rem; border-radius: 5px;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .cond-active  { background: var(--active-bg);  color: var(--active);  border: 1px solid var(--active-border); }
+    .cond-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+    .cond-error   { background: var(--error-bg);   color: var(--error);   border: 1px solid var(--error-border); }
+
+    /* ── UPTIME ── */
+    .uptime-item { margin-bottom: 0.9rem; }
+    .uptime-meta {
       display: flex; justify-content: space-between;
-      font-size: 0.8rem; margin-bottom: 4px;
+      font-size: 0.82rem; font-weight: 500;
+      margin-bottom: 5px;
     }
-    .uptime-pct { font-family: var(--font-mono); color: var(--color-active); }
-    .uptime-bar-bg {
-      height: 6px; border-radius: 3px;
-      background: var(--color-border);
-      overflow: hidden;
+    .uptime-pct { font-family: var(--mono); font-weight: 700; }
+    .uptime-pct.ok   { color: var(--active); }
+    .uptime-pct.warn { color: var(--warning); }
+    .uptime-pct.err  { color: var(--error); }
+    .uptime-track {
+      height: 7px; border-radius: 4px;
+      background: var(--border); overflow: hidden;
     }
-    .uptime-bar-fill {
-      height: 100%; border-radius: 3px;
-      background: var(--color-active);
-      transition: width 1s ease;
+    .uptime-fill {
+      height: 100%; border-radius: 4px;
+      transition: width 1.2s ease;
     }
-    .uptime-bar-fill.warn { background: var(--color-warning); }
-    .uptime-bar-fill.err  { background: var(--color-error); }
+    .uf-ok   { background: var(--active); }
+    .uf-warn { background: var(--warning); }
+    .uf-err  { background: var(--error); }
 
-    /* ── FOOTER ───────────────────────────────── */
+    /* ── FOOTER ── */
     .site-footer {
-      border-top: 1px solid var(--color-border);
-      margin-top: 4rem;
-      padding: 2rem 0;
-      color: var(--color-muted);
-      font-size: 0.8rem;
+      background: var(--navy);
+      color: #94a3b8;
+      padding: 1.1rem 0;
     }
-    .site-footer a { color: var(--color-muted); text-decoration: none; }
-    .site-footer a:hover { color: var(--color-text); }
-    .footer-mono { font-family: var(--font-mono); font-size: 0.72rem; }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.75rem;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 9px;
+      color: #fff; font-weight: 700; font-size: 0.88rem;
+      text-decoration: none;
+    }
+    .footer-brand-icon {
+      width: 26px; height: 26px; background: #fff;
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+    .footer-links { display: flex; gap: 1.25rem; }
+    .footer-links a {
+      color: #94a3b8; text-decoration: none;
+      font-size: 0.82rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .footer-links a.active,
+    .footer-links a:hover { color: #fff; }
 
-    @media (max-width: 576px) {
-      .incident-row { grid-template-columns: 1fr; gap: .4rem; }
-      .hero h1 { font-size: 1.5rem; }
+    @media (max-width: 600px) {
+      .incident-card { grid-template-columns: 1fr; gap: .4rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .section-header { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── NAVBAR ── -->
-  <nav class="main-nav">
-    <div class="container d-flex justify-content-between align-items-center">
-      <a href="index.html" class="nav-logo">
-        <div class="nav-logo-icon">🏥</div>
-        <div class="nav-logo-text">
-          HSR Status
-          <span>Hospital San Rafael · Tunja</span>
-        </div>
-      </a>
-      <div class="nav-links d-flex gap-1">
-        <a href="index.html" class="active">Inicio</a>
-        <a href="segunda_vista.html">Detalle Producto</a>
+<!-- ═══ NAVBAR ═══ -->
+<nav class="main-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="nav-brand-icon">🏥</div>
+      Hospital San Rafael | Portal de Estado
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="segunda_vista.html">Estado del Sistema</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<!-- ABCD26-2: Hero con indicador global -->
+<section class="hero">
+  <div class="container">
+    <h1>Estado Global del Sistema</h1>
+    <div>
+      <div class="global-chip">
+        <span class="pulse-dot"></span>
+        ACTIVE
       </div>
     </div>
-  </nav>
+    <p class="hero-sub" id="timestamp">Última actualización: cargando...</p>
+  </div>
+</section>
 
-  <!-- ── HERO ── -->
-  <section class="hero">
-    <div class="container">
-      <div class="global-badge">
-        <span class="pulse"></span>
-        TODOS LOS SISTEMAS OPERATIVOS
-      </div>
-      <h1>Estado del Sistema</h1>
-      <p>Última actualización: 15 mayo 2026, 08:34:12 · Actualización automática cada 60 s</p>
-    </div>
-  </section>
-
-  <main class="container pb-5">
-
-    <!-- ── SERVICIOS ── -->
-    <div class="section-title">— Servicios monitoreados (21)</div>
+<!-- ═══ SERVICIOS ═══ -->
+<!-- ABCD26-3: Grilla de servicios -->
+<section class="section-wrap">
+  <div class="container">
+    <h2 class="section-header">Servicios Monitoreados</h2>
 
     <div class="row g-0">
       <div class="col-12 col-lg-6 pe-lg-2">
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Sistema de Historia Clínica</div>
-            <div class="service-sub">SHC · Aplicación · Core</div>
+            <div class="svc-name">Sistema de Historia Clínica</div>
+            <div class="svc-sub">SHC · Aplicación · Core</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Sistema de Citas Médicas</div>
-            <div class="service-sub">SCM · Aplicación · Pacientes</div>
+            <div class="svc-name">Sistema de Citas Médicas</div>
+            <div class="svc-sub">SCM · Aplicación · Pacientes</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">API de Laboratorio</div>
-            <div class="service-sub">LAB-API · Servicio · Diagnóstico</div>
+            <div class="svc-name">API de Laboratorio</div>
+            <div class="svc-sub">LAB-API · Servicio · Diagnóstico</div>
           </div>
-          <span class="status-dot text-warning"><span class="dot dot-warning"></span>Degradado</span>
+          <span class="badge-status bs-warning">
+            <span class="bs-dot"></span>Degradado
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Servidor de Base de Datos</div>
-            <div class="service-sub">DB-MAIN · Infraestructura · PostgreSQL</div>
+            <div class="svc-name">Servidor de Base de Datos</div>
+            <div class="svc-sub">DB-MAIN · Infraestructura · PostgreSQL</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Sistema de Facturación</div>
-            <div class="service-sub">FACT · Plataforma · Administrativo</div>
+            <div class="svc-name">Sistema de Facturación</div>
+            <div class="svc-sub">FACT · Plataforma · Administrativo</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
       </div>
       <div class="col-12 col-lg-6 ps-lg-2">
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Portal de Imágenes Diagnósticas</div>
-            <div class="service-sub">PACS · Aplicación · Radiología</div>
+            <div class="svc-name">Portal de Imágenes Diagnósticas</div>
+            <div class="svc-sub">PACS · Aplicación · Radiología</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Red Interna (LAN/VPN)</div>
-            <div class="service-sub">NET · Infraestructura · Conectividad</div>
+            <div class="svc-name">Red Interna (LAN/VPN)</div>
+            <div class="svc-sub">NET · Infraestructura · Conectividad</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Sistema de Urgencias</div>
-            <div class="service-sub">URG · Aplicación · Crítico</div>
+            <div class="svc-name">Sistema de Urgencias</div>
+            <div class="svc-sub">URG · Aplicación · Crítico</div>
           </div>
-          <span class="status-dot text-error"><span class="dot dot-error"></span>Error</span>
+          <span class="badge-status bs-error">
+            <span class="bs-dot"></span>Error
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Correo Institucional</div>
-            <div class="service-sub">MAIL · Servicio · Comunicaciones</div>
+            <div class="svc-name">Correo Institucional</div>
+            <div class="svc-sub">MAIL · Servicio · Comunicaciones</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
         <a href="segunda_vista.html" class="service-card">
           <div>
-            <div class="service-name">Backup y Almacenamiento</div>
-            <div class="service-sub">BKP · Infraestructura · Datos</div>
+            <div class="svc-name">Backup y Almacenamiento</div>
+            <div class="svc-sub">BKP · Infraestructura · Datos</div>
           </div>
-          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+          <span class="badge-status bs-active">
+            <span class="bs-dot"></span>Operativo
+          </span>
         </a>
+
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- ── HISTORIAL ── -->
-    <div class="section-title">— Historial de incidentes recientes</div>
+<!-- ═══ HISTORIAL ═══ -->
+<!-- ABCD26-4: Historial de incidentes -->
+<section class="section-wrap">
+  <div class="container">
+    <h2 class="section-header">Historial de Incidentes Recientes</h2>
 
-    <div class="incident-row">
-      <div class="incident-date">15 may 2026<br>06:12</div>
+    <div class="incident-card">
+      <div class="inc-date">15 may 2026<br>06:12</div>
       <div>
-        <div class="incident-title">Sistema de Urgencias — Caída parcial del módulo de triaje</div>
-        <div class="incident-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos. Equipo de soporte notificado.</div>
+        <div class="inc-title">Sistema de Urgencias — Caída parcial del módulo de triaje</div>
+        <div class="inc-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos. Equipo de soporte notificado.</div>
       </div>
-      <span class="badge-condition badge-error">CONDITION_ERROR</span>
+      <span class="cond-badge cond-error">CONDITION_ERROR</span>
     </div>
 
-    <div class="incident-row">
-      <div class="incident-date">14 may 2026<br>22:40</div>
+    <div class="incident-card">
+      <div class="inc-date">14 may 2026<br>22:40</div>
       <div>
-        <div class="incident-title">API de Laboratorio — Latencia elevada en respuestas</div>
-        <div class="incident-desc">Incremento en el tiempo de respuesta superior a 3 s en endpoints de resultados. Se investiga el origen.</div>
+        <div class="inc-title">API de Laboratorio — Latencia elevada en respuestas</div>
+        <div class="inc-desc">Incremento en el tiempo de respuesta superior a 3 s en endpoints de resultados. Se investiga el origen.</div>
       </div>
-      <span class="badge-condition badge-warning">CONDITION_WARNING</span>
+      <span class="cond-badge cond-warning">CONDITION_WARNING</span>
     </div>
 
-    <div class="incident-row">
-      <div class="incident-date">13 may 2026<br>10:05</div>
+    <div class="incident-card">
+      <div class="inc-date">13 may 2026<br>10:05</div>
       <div>
-        <div class="incident-title">Servidor de Base de Datos — Mantenimiento programado</div>
-        <div class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin pérdida de datos.</div>
+        <div class="inc-title">Servidor de Base de Datos — Mantenimiento programado</div>
+        <div class="inc-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin pérdida de datos.</div>
       </div>
-      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+      <span class="cond-badge cond-active">CONDITION_ACTIVE</span>
     </div>
 
-    <div class="incident-row">
-      <div class="incident-date">10 may 2026<br>14:30</div>
+    <div class="incident-card">
+      <div class="inc-date">10 may 2026<br>14:30</div>
       <div>
-        <div class="incident-title">Historia Clínica — Interrupción en módulo de consultas externas</div>
-        <div class="incident-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante rollback del último despliegue.</div>
+        <div class="inc-title">Historia Clínica — Interrupción en módulo de consultas externas</div>
+        <div class="inc-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante rollback del último despliegue.</div>
       </div>
-      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
+      <span class="cond-badge cond-active">CONDITION_ACTIVE</span>
     </div>
 
-    <!-- ── DISPONIBILIDAD ── -->
-    <div class="section-title">— Disponibilidad últimos 30 días</div>
+  </div>
+</section>
 
+<!-- ═══ DISPONIBILIDAD ═══ -->
+<!-- ABCD26-6: Barras de uptime -->
+<section class="section-wrap">
+  <div class="container">
+    <h2 class="section-header">Disponibilidad — Últimos 30 días</h2>
     <div class="row">
-      <div class="col-12 col-md-6">
-        <div class="uptime-row">
-          <div class="uptime-label"><span>Historia Clínica</span><span class="uptime-pct">99.8%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.8%"></div></div>
+      <div class="col-12 col-md-6 pe-md-4">
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>Sistema de Historia Clínica</span>
+            <span class="uptime-pct ok">99.8%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-ok" style="width:99.8%"></div></div>
         </div>
-        <div class="uptime-row">
-          <div class="uptime-label"><span>Citas Médicas</span><span class="uptime-pct">99.5%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.5%"></div></div>
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>Citas Médicas</span>
+            <span class="uptime-pct ok">99.5%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-ok" style="width:99.5%"></div></div>
         </div>
-        <div class="uptime-row">
-          <div class="uptime-label"><span>API Laboratorio</span><span class="uptime-pct" style="color:var(--color-warning)">94.2%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill warn" style="width:94.2%"></div></div>
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>API de Laboratorio</span>
+            <span class="uptime-pct warn">94.2%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-warn" style="width:94.2%"></div></div>
         </div>
+
       </div>
-      <div class="col-12 col-md-6">
-        <div class="uptime-row">
-          <div class="uptime-label"><span>Base de Datos</span><span class="uptime-pct">99.9%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.9%"></div></div>
+      <div class="col-12 col-md-6 ps-md-4">
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>Base de Datos</span>
+            <span class="uptime-pct ok">99.9%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-ok" style="width:99.9%"></div></div>
         </div>
-        <div class="uptime-row">
-          <div class="uptime-label"><span>Sistema de Urgencias</span><span class="uptime-pct" style="color:var(--color-error)">87.3%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill err" style="width:87.3%"></div></div>
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>Sistema de Urgencias</span>
+            <span class="uptime-pct err">87.3%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-err" style="width:87.3%"></div></div>
         </div>
-        <div class="uptime-row">
-          <div class="uptime-label"><span>Facturación</span><span class="uptime-pct">98.7%</span></div>
-          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:98.7%"></div></div>
+
+        <div class="uptime-item">
+          <div class="uptime-meta">
+            <span>Facturación</span>
+            <span class="uptime-pct ok">98.7%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill uf-ok" style="width:98.7%"></div></div>
         </div>
+
       </div>
     </div>
+  </div>
+</section>
 
-  </main>
+<!-- ═══ FOOTER ═══ -->
+<!-- ABCD26-6: Footer institucional -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a href="index.html" class="footer-brand">
+      <div class="footer-brand-icon">🏥</div>
+      Hospital San Rafael | Portal de Estado
+    </a>
+    <nav class="footer-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="segunda_vista.html">Estado del Sistema</a>
+      <a href="#">Historial</a>
+      <a href="#">Admin</a>
+    </nav>
+  </div>
+</footer>
 
-  <!-- ── FOOTER ── -->
-  <footer class="site-footer">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-      <div>
-        <div class="fw-semibold mb-1" style="color:var(--color-text)">HSR Status · Hospital San Rafael</div>
-        <div class="footer-mono">Tunja, Boyacá · © 2026 · Sistema de Monitoreo v1.0</div>
-      </div>
-      <div class="d-flex gap-3">
-        <a href="index.html">Inicio</a>
-        <a href="segunda_vista.html">Detalle</a>
-        <a href="#">Historial</a>
-        <a href="#">Admin</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Simulación de actualización automática del timestamp
-    function updateTimestamp() {
-      const el = document.querySelector('.hero p');
-      if (!el) return;
-      const now = new Date();
-      const formatted = now.toLocaleString('es-CO', {
-        day: 'numeric', month: 'long', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
-      el.textContent = `Última actualización: ${formatted} · Actualización automática cada 60 s`;
-    }
-    updateTimestamp();
-    setInterval(updateTimestamp, 60000);
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function updateTimestamp() {
+    const el = document.getElementById('timestamp');
+    if (!el) return;
+    const now = new Date();
+    const f = now.toLocaleString('es-CO', {
+      day: 'numeric', month: 'long', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+    });
+    el.textContent = 'Última actualización: ' + f;
+  }
+  updateTimestamp();
+  setInterval(updateTimestamp, 60000);
+</script>
 </body>
 </html>
