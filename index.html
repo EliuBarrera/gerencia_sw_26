@@ -1,343 +1,472 @@
 <!doctype html>
 <html lang="es">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Estado del Sistema - Hospital San Rafael</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Portal de Estado — Hospital San Rafael Tunja</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-active: #198754;
-      --color-warning: #b58105;
-      --color-error: #dc3545;
-      --color-muted: #6c757d;
-      --color-border: #dee2e6;
-      --color-surface: #ffffff;
+      --color-active:  #22c55e;
+      --color-warning: #f59e0b;
+      --color-error:   #ef4444;
+      --color-bg:      #0b0f1a;
+      --color-surface: #111827;
+      --color-border:  #1f2937;
+      --color-text:    #e5e7eb;
+      --color-muted:   #6b7280;
+      --color-accent:  #3b82f6;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-sans: 'IBM Plex Sans', sans-serif;
     }
+
+    * { box-sizing: border-box; }
 
     body {
-      background-color: #f8f9fa;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      min-height: 100vh;
     }
 
+    /* ── NAVBAR ───────────────────────────────── */
+    .main-nav {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.85rem 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .nav-logo-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+    .nav-logo-text span {
+      display: block;
+      color: var(--color-muted);
+      font-size: 0.7rem;
+    }
+    .nav-links a {
+      color: var(--color-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      transition: all .2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--color-text);
+      background: var(--color-border);
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .global-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.3);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--color-active);
+      margin-bottom: 1.25rem;
+    }
+    .global-badge.warning {
+      background: rgba(245,158,11,.1);
+      border-color: rgba(245,158,11,.3);
+      color: var(--color-warning);
+    }
+    .global-badge.error {
+      background: rgba(239,68,68,.1);
+      border-color: rgba(239,68,68,.3);
+      color: var(--color-error);
+    }
+    .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.3); }
+    }
+    .hero h1 {
+      font-size: 2rem; font-weight: 600;
+      letter-spacing: -.02em;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      color: var(--color-muted);
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+    }
+
+    /* ── SECTION TITLE ────────────────────────── */
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--color-muted);
+      padding: 2rem 0 1rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    /* ── SERVICE CARDS ────────────────────────── */
+    .service-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: border-color .2s, transform .2s;
+      text-decoration: none;
+      color: inherit;
+      margin-bottom: 0.6rem;
+    }
+    .service-card:hover {
+      border-color: #374151;
+      transform: translateY(-1px);
+      color: inherit;
+    }
+    .service-name {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+    .service-sub {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+    .status-dot {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-active  { background: var(--color-active); }
+    .dot-warning { background: var(--color-warning); }
+    .dot-error   { background: var(--color-error); }
+    .text-active  { color: var(--color-active); }
+    .text-warning { color: var(--color-warning); }
+    .text-error   { color: var(--color-error); }
+
+    /* ── INCIDENTS ────────────────────────────── */
     .incident-row {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.6rem;
       display: grid;
-      grid-template-columns: 120px 1fr auto;
-      gap: 1.5rem;
-      align-items: center;
-      transition: transform 0.2s;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      grid-template-columns: 110px 1fr auto;
+      gap: 1rem;
+      align-items: start;
     }
-
-    .incident-row:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
-
     .incident-date {
-      font-size: 0.85rem;
-      color: var(--color-muted);
-      font-weight: 500;
-      line-height: 1.2;
-    }
-
-    .incident-title {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #212529;
-      margin-bottom: 0.25rem;
-    }
-
-    .incident-desc {
-      font-size: 0.9rem;
-      color: var(--color-muted);
-      margin: 0;
-    }
-
-    .badge-condition {
+      font-family: var(--font-mono);
       font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.4rem 0.8rem;
-      border-radius: 50px;
-      text-transform: uppercase;
+      color: var(--color-muted);
+      padding-top: 2px;
     }
-
-    .badge-active {
-      background: rgba(25, 135, 84, 0.1);
-      color: var(--color-active);
+    .incident-title { font-weight: 500; font-size: 0.88rem; }
+    .incident-desc  { font-size: 0.8rem; color: var(--color-muted); margin-top: 3px; }
+    .badge-condition {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      white-space: nowrap;
     }
+    .badge-active  { background: rgba(34,197,94,.15); color: var(--color-active); }
+    .badge-warning { background: rgba(245,158,11,.15); color: var(--color-warning); }
+    .badge-error   { background: rgba(239,68,68,.15);  color: var(--color-error); }
 
-    .badge-warning {
-      background: rgba(255, 193, 7, 0.15);
-      color: var(--color-warning);
+    /* ── UPTIME BARS ──────────────────────────── */
+    .uptime-row {
+      margin-bottom: 1rem;
     }
-
-    .badge-error {
-      background: rgba(220, 53, 69, 0.1);
-      color: var(--color-error);
+    .uptime-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; margin-bottom: 4px;
     }
-
-    .section-title {
-      font-weight: 800;
-      color: #495057;
-      margin-bottom: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #dee2e6;
+    .uptime-pct { font-family: var(--font-mono); color: var(--color-active); }
+    .uptime-bar-bg {
+      height: 6px; border-radius: 3px;
+      background: var(--color-border);
+      overflow: hidden;
     }
-
-    @media (max-width: 768px) {
-      .incident-row {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
+    .uptime-bar-fill {
+      height: 100%; border-radius: 3px;
+      background: var(--color-active);
+      transition: width 1s ease;
     }
+    .uptime-bar-fill.warn { background: var(--color-warning); }
+    .uptime-bar-fill.err  { background: var(--color-error); }
 
-          .uptime-row {
-        margin-bottom: 1rem;
-      }
+    /* ── FOOTER ───────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--color-border);
+      margin-top: 4rem;
+      padding: 2rem 0;
+      color: var(--color-muted);
+      font-size: 0.8rem;
+    }
+    .site-footer a { color: var(--color-muted); text-decoration: none; }
+    .site-footer a:hover { color: var(--color-text); }
+    .footer-mono { font-family: var(--font-mono); font-size: 0.72rem; }
 
-      .uptime-label {
-        display: flex;
-        justify-content: space-between;
-        font-size: .8rem;
-        margin-bottom: 4px;
-      }
-
-      .uptime-pct {
-        font-family: var(--font-mono);
-        color: var(--color-active);
-      }
-
-      .uptime-bar-bg {
-        height: 6px;
-        border-radius: 3px;
-        background: var(--color-border);
-        overflow: hidden;
-      }
-
-      .uptime-bar-fill {
-        height: 100%;
-        border-radius: 3px;
-        background: var(--color-active);
-        transition: width 1s ease;
-      }
-
-      .uptime-bar-fill.warn {
-        background: var(--color-warning);
-      }
-
-      .uptime-bar-fill.err {
-        background: var(--color-error);
-      }
-
-      .site-footer {
-        border-top: 1px solid var(--color-border);
-        margin-top: 4rem;
-        padding: 2rem 0;
-        color: var(--color-muted);
-        font-size: .8rem;
-      }
-
-      .site-footer a {
-        color: var(--color-muted);
-        text-decoration: none;
-      }
-
-      .site-footer a:hover {
-        color: var(--color-text);
-      }
-
-      .footer-mono {
-        font-family: var(--font-mono);
-        font-size: .72rem;
-      }
+    @media (max-width: 576px) {
+      .incident-row { grid-template-columns: 1fr; gap: .4rem; }
+      .hero h1 { font-size: 1.5rem; }
+    }
   </style>
 </head>
-
 <body>
 
-  <!-- NAVBAR - INTEGRANTE 1 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <span class="fs-4 me-2">🏥</span> <span class="fw-bold">Hospital San Rafael | Portal de Estado</span>
+  <!-- ── NAVBAR ── -->
+  <nav class="main-nav">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">🏥</div>
+        <div class="nav-logo-text">
+          HSR Status
+          <span>Hospital San Rafael · Tunja</span>
+        </div>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active fw-bold" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="segunda_vista.html">Estado del Sistema</a>
-          </li>
-        </ul>
+      <div class="nav-links d-flex gap-1">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="segunda_vista.html">Detalle Producto</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO - INTEGRANTE 1 -->
-  <header class="py-5 text-center bg-white border-bottom shadow-sm mb-5">
+  <!-- ── HERO ── -->
+  <section class="hero">
     <div class="container">
-      <h1 class="display-5 fw-bold text-dark mb-4">Estado Global del Sistema</h1>
-      <div class="mb-4">
-        <span class="badge bg-success fs-4 px-4 py-3 rounded-pill shadow-sm">
-          🟢 ACTIVE
-        </span>
+      <div class="global-badge">
+        <span class="pulse"></span>
+        TODOS LOS SISTEMAS OPERATIVOS
       </div>
-      <p class="lead text-muted mb-0">
-        Última actualización: <strong>15 de Mayo de 2026, 09:45 AM</strong>
-      </p>
+      <h1>Estado del Sistema</h1>
+      <p>Última actualización: 15 mayo 2026, 08:34:12 · Actualización automática cada 60 s</p>
     </div>
-  </header>
+  </section>
 
-  <!-- MAIN CONTENT - INTEGRANTE 3 -->
-  <main class="container py-4">
-    <h2 class="section-title">Historial de Incidentes Recientes</h2>
+  <main class="container pb-5">
+
+    <!-- ── SERVICIOS ── -->
+    <div class="section-title">— Servicios monitoreados (21)</div>
+
+    <div class="row g-0">
+      <div class="col-12 col-lg-6 pe-lg-2">
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Sistema de Historia Clínica</div>
+            <div class="service-sub">SHC · Aplicación · Core</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Sistema de Citas Médicas</div>
+            <div class="service-sub">SCM · Aplicación · Pacientes</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">API de Laboratorio</div>
+            <div class="service-sub">LAB-API · Servicio · Diagnóstico</div>
+          </div>
+          <span class="status-dot text-warning"><span class="dot dot-warning"></span>Degradado</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Servidor de Base de Datos</div>
+            <div class="service-sub">DB-MAIN · Infraestructura · PostgreSQL</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Sistema de Facturación</div>
+            <div class="service-sub">FACT · Plataforma · Administrativo</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+      </div>
+      <div class="col-12 col-lg-6 ps-lg-2">
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Portal de Imágenes Diagnósticas</div>
+            <div class="service-sub">PACS · Aplicación · Radiología</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Red Interna (LAN/VPN)</div>
+            <div class="service-sub">NET · Infraestructura · Conectividad</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Sistema de Urgencias</div>
+            <div class="service-sub">URG · Aplicación · Crítico</div>
+          </div>
+          <span class="status-dot text-error"><span class="dot dot-error"></span>Error</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Correo Institucional</div>
+            <div class="service-sub">MAIL · Servicio · Comunicaciones</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+        <a href="segunda_vista.html" class="service-card">
+          <div>
+            <div class="service-name">Backup y Almacenamiento</div>
+            <div class="service-sub">BKP · Infraestructura · Datos</div>
+          </div>
+          <span class="status-dot text-active"><span class="dot dot-active"></span>Operativo</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── HISTORIAL ── -->
+    <div class="section-title">— Historial de incidentes recientes</div>
 
     <div class="incident-row">
       <div class="incident-date">15 may 2026<br>06:12</div>
       <div>
         <div class="incident-title">Sistema de Urgencias — Caída parcial del módulo de triaje</div>
-        <p class="incident-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos.
-          Equipo de soporte notificado.</p>
+        <div class="incident-desc">El módulo de registro de triaje presentó timeout en consultas a la base de datos. Equipo de soporte notificado.</div>
       </div>
-      <div class="text-end">
-        <span class="badge-condition badge-error">CONDITION_ERROR</span>
-      </div>
+      <span class="badge-condition badge-error">CONDITION_ERROR</span>
     </div>
 
     <div class="incident-row">
       <div class="incident-date">14 may 2026<br>22:40</div>
       <div>
         <div class="incident-title">API de Laboratorio — Latencia elevada en respuestas</div>
-        <p class="incident-desc">Incremento en el tiempo de respuesta superior a 3s en endpoints de resultados. Se
-          investiga el origen.</p>
+        <div class="incident-desc">Incremento en el tiempo de respuesta superior a 3 s en endpoints de resultados. Se investiga el origen.</div>
       </div>
-      <div class="text-end">
-        <span class="badge-condition badge-warning">CONDITION_WARNING</span>
-      </div>
+      <span class="badge-condition badge-warning">CONDITION_WARNING</span>
     </div>
 
     <div class="incident-row">
       <div class="incident-date">13 may 2026<br>10:05</div>
       <div>
         <div class="incident-title">Servidor de Base de Datos — Mantenimiento programado</div>
-        <p class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin
-          pérdida de datos.</p>
+        <div class="incident-desc">Ventana de mantenimiento preventivo ejecutada con éxito. Servicios restaurados sin pérdida de datos.</div>
       </div>
-      <div class="text-end">
-        <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
-      </div>
+      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
     </div>
 
     <div class="incident-row">
       <div class="incident-date">10 may 2026<br>14:30</div>
       <div>
         <div class="incident-title">Historia Clínica — Interrupción en módulo de consultas externas</div>
-        <p class="incident-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante
-          rollback.</p>
+        <div class="incident-desc">Falla en la integración con el sistema de autenticación SSO. Resuelto mediante rollback del último despliegue.</div>
       </div>
-      <div class="text-end">
-        <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
-      </div>
+      <span class="badge-condition badge-active">CONDITION_ACTIVE</span>
     </div>
 
-    <!-- ABCD26-6: Barras de disponibilidad (uptime) Integrante 5-->
-    <div class="section-title">Disponibilidad últimos 30 días</div>
+    <!-- ── DISPONIBILIDAD ── -->
+    <div class="section-title">— Disponibilidad últimos 30 días</div>
 
     <div class="row">
       <div class="col-12 col-md-6">
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>Historia Clínica</span>
-            <span class="uptime-pct">99.8%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill" style="width:99.8%"></div>
-          </div>
+          <div class="uptime-label"><span>Historia Clínica</span><span class="uptime-pct">99.8%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.8%"></div></div>
         </div>
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>Citas Médicas</span>
-            <span class="uptime-pct">99.5%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill" style="width:99.5%"></div>
-          </div>
+          <div class="uptime-label"><span>Citas Médicas</span><span class="uptime-pct">99.5%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.5%"></div></div>
         </div>
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>API Laboratorio</span>
-            <span class="uptime-pct" style="color:var(--color-warning)">94.2%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill warn" style="width:94.2%"></div>
-          </div>
+          <div class="uptime-label"><span>API Laboratorio</span><span class="uptime-pct" style="color:var(--color-warning)">94.2%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill warn" style="width:94.2%"></div></div>
         </div>
       </div>
       <div class="col-12 col-md-6">
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>Base de Datos</span>
-            <span class="uptime-pct">99.9%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill" style="width:99.9%"></div>
-          </div>
+          <div class="uptime-label"><span>Base de Datos</span><span class="uptime-pct">99.9%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:99.9%"></div></div>
         </div>
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>Sistema de Urgencias</span>
-            <span class="uptime-pct" style="color:var(--color-error)">87.3%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill err" style="width:87.3%"></div>
-          </div>
+          <div class="uptime-label"><span>Sistema de Urgencias</span><span class="uptime-pct" style="color:var(--color-error)">87.3%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill err" style="width:87.3%"></div></div>
         </div>
         <div class="uptime-row">
-          <div class="uptime-label">
-            <span>Facturación</span>
-            <span class="uptime-pct">98.7%</span>
-          </div>
-          <div class="uptime-bar-bg">
-            <div class="uptime-bar-fill" style="width:98.7%"></div>
-          </div>
+          <div class="uptime-label"><span>Facturación</span><span class="uptime-pct">98.7%</span></div>
+          <div class="uptime-bar-bg"><div class="uptime-bar-fill" style="width:98.7%"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ABCD26-6: Footer institucional Integrante 5-->
-    <footer class="site-footer">
-      <div class="container d-flex flex-column flex-md-row
-               justify-content-between align-items-start
-               align-items-md-center gap-3">
-        <div>
-          <div class="fw-semibold mb-1" style="color:var(--color-text)">
-            HSR Status · Hospital San Rafael
-          </div>
-          <div class="footer-mono">
-            Tunja, Boyacá · © 2026 · Sistema de Monitoreo v1.0
-          </div>
-        </div>
-        <div class="d-flex gap-3">
-          <a href="index.html">Inicio</a>
-          <a href="segunda_vista.html">Detalle</a>
-          <a href="#">Historial</a>
-          <a href="#">Admin</a>
-        </div>
-      </div>
-    </footer>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+      <div>
+        <div class="fw-semibold mb-1" style="color:var(--color-text)">HSR Status · Hospital San Rafael</div>
+        <div class="footer-mono">Tunja, Boyacá · © 2026 · Sistema de Monitoreo v1.0</div>
+      </div>
+      <div class="d-flex gap-3">
+        <a href="index.html">Inicio</a>
+        <a href="segunda_vista.html">Detalle</a>
+        <a href="#">Historial</a>
+        <a href="#">Admin</a>
+      </div>
+    </div>
+  </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Simulación de actualización automática del timestamp
+    function updateTimestamp() {
+      const el = document.querySelector('.hero p');
+      if (!el) return;
+      const now = new Date();
+      const formatted = now.toLocaleString('es-CO', {
+        day: 'numeric', month: 'long', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+      el.textContent = `Última actualización: ${formatted} · Actualización automática cada 60 s`;
+    }
+    updateTimestamp();
+    setInterval(updateTimestamp, 60000);
+  </script>
+</body>
 </html>
